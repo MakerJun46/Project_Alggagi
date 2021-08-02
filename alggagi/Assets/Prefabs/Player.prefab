@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8022573373482223743}
   - component: {fileID: 1488556842460827718}
   - component: {fileID: 8535119905140818604}
+  - component: {fileID: 5947239364952456349}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -272,3 +273,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMouseUp: 0
+--- !u!114 &5947239364952456349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8022573373482223742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51473eb8c66cc524faad8aa79c72b63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerFactory: {fileID: 0}
+  ballFactory: {fileID: 0}
+  Balls: []
+  isCollision: 1
+  isAlive: 0
+  v1: {x: 0, y: 0, z: 0}
+  v2: {x: 0, y: 0, z: 0}
+  v11: {x: 0, y: 0, z: 0}
+  v22: {x: 0, y: 0, z: 0}

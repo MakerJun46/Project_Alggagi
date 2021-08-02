@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4058154611539262087}
   - component: {fileID: 4058154611539262105}
   - component: {fileID: 5974282479637128191}
+  - component: {fileID: 7563634221257879862}
   m_Layer: 0
   m_Name: Opponent
   m_TagString: Opponent
@@ -116,3 +117,24 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.49999997
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7563634221257879862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058154611539262104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51473eb8c66cc524faad8aa79c72b63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerFactory: {fileID: 0}
+  ballFactory: {fileID: 0}
+  Balls: []
+  isCollision: 1
+  isAlive: 0
+  v1: {x: 0, y: 0, z: 0}
+  v2: {x: 0, y: 0, z: 0}
+  v11: {x: 0, y: 0, z: 0}
+  v22: {x: 0, y: 0, z: 0}

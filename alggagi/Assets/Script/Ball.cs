@@ -22,7 +22,7 @@ public class Ball : MonoBehaviour
 
    void Start()
     {
-        GM = GameObject.Find("GameMannager");
+        GM = GameObject.Find("GameManager");
         r = transform.localScale.x / 2;
     }
 
@@ -41,7 +41,6 @@ public class Ball : MonoBehaviour
             if (transform.position.z < -5.0f)
             {
                 FallDown();
-                Destroy(gameObject);
             }
             transform.position += (new Vector3(0, 0, -5) + v) * Time.deltaTime;
         }
@@ -60,7 +59,6 @@ public class Ball : MonoBehaviour
     /// </summary>
     public void FallDown()
     {
-        Debug.LogError("FallDown");
         GM.GetComponent<PhysicsManager>().FindBalls();
         Destroy(gameObject);
     }

@@ -78,12 +78,16 @@ public class PlayerMove : Ball
             }
         }
     }
+
+
     public void ballFriction()
     {
         a_friction = -0.1f;
         Vector3 v_norm = v_Player.normalized;
         v_Player += a_friction * v_norm * Time.deltaTime;
     }
+
+
     void playermove_()
     {
         a_Player = GetComponent<Ball>().a;

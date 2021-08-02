@@ -20,6 +20,7 @@ public class PhysicsManager : MonoBehaviour
     float numX = -2.2f;
     float numY = -1.0f;*/
     
+    
     public Vector3 v1, v2;
     Vector3 c1, c2, n;
     float n1, n2;
@@ -47,7 +48,6 @@ public class PhysicsManager : MonoBehaviour
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
         moveBalls();
@@ -121,7 +121,6 @@ public class PhysicsManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void FindBalls()
@@ -139,5 +138,4 @@ public class PhysicsManager : MonoBehaviour
 
         Balls = tmp;
     }
-
 }

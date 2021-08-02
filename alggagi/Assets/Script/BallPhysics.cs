@@ -28,11 +28,12 @@ public class BallPhysics : MonoBehaviour
 
 
     float elasticModulus = 1.0f; // 탄성 계수
-    float thisRadius, collisonRadius;
+    float thisRadius, collisionRadius;
     float thisMass, collisionMass;
+    float collisionTime;
     Vector3 thisVelocity, collisionVelocity;
     Vector3 thisCenter, collisionCenter;
-    Vector3 thisVelocityPrime, coliisionVelocityPrime;
+    Vector3 thisVelocityPrime, collisionVelocityPrime;
     Vector3 ReturnVelocity;
     
 
@@ -47,19 +48,74 @@ public class BallPhysics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveBalls();
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        collisionRadius = collision.gameObject.GetComponent<Ball>().r;
+        collisionMass = collision.gameObject.GetComponent<Ball>().m;
+        collisionCenter = collision.gameObject.GetComponent<Ball>().transform.position;
+
+        if(this.gameObject.tag == "Player")
+        {
+            gameObject.GetComponent<PlayerMove>().isCollision_Player = true;
+            thisVelocity = gameObject.GetComponent<PlayerMove>().v_Player;
+        }
+        else
+        {
+            gameObject.GetComponent<Ball>().isCollision = true;
+            thisVelocity = gameObject.GetComponent<Ball>().v;
+        }
+
+        collision.gameObject.GetComponent<Ball>().isCollision = true;
+        collisionVelocity = collision.gameObject.GetComponent<Ball>().v;
+
+        n = (collisionCenter - thisCenter) / Vector3.Distance(collisionCenter, thisCenter);
+
+        v1pp = Vector3.Dot(thisVelocity, n);
+        v1p = v1pp * n;
+        a1 = v1 - v1p;
+
+        v2pp = Vector3.Dot(collisionVelocity, n);
+        v2p = v2pp * n;
+        a2 = v2 - v2p;
+
+        v1pprime = (((thisMass - elasticModulus * collisionMass) * v1pp) + ((1 + elasticModulus) * collisionMass * v2pp)) / (thisMass + collisionMass);
+        v2pprime = (((collisionMass - elasticModulus * thisMass) * v2pp) + ((1 + elasticModulus) * thisMass * v1pp)) / (thisMass + collisionMass);
+
+        v11 = v1pprime * n + a1; // 충돌 후 원 c1의 속도
+        v22 = v2pprime * n + a2; // 충돌 후 원 c2의 속도
+
+        if (this.gameObject.tag == "Player")
+            this.gameObject.GetComponent<PlayerMove>().v_Player = v11;
+
+        else
+        {
+            this.gameObject.GetComponent<Ball>().v = v11;
+        }
+
+        collision.gameObject.GetComponent<Ball>().v = v22;
+
+        this.gameObject.transform.position += (Time.deltaTime - collisionTime) * v11;
+        collision.gameObject.transform.position += (Time.deltaTime - collisionTime) * v22;
+
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        
+        collisionTime = (thisRadius + collisionRadius - Vector3.Distance(this.gameObject.transform.position, collision.gameObject.transform.position)) / Mathf.Abs(v1pp - v2pp);
+
+        this.gameObject.transform.position -= collisionTime * v1;
+        collision.gameObject.transform.position -= collisionTime * v2;
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+    }
+
+
+    /*
     void moveBalls()
     {
         for (int i = 0; i < Balls.Count; i++) // 두 공 충돌 물리적 엔진
@@ -130,6 +186,7 @@ public class BallPhysics : MonoBehaviour
         }
 
     }
+    */
 
     public void FindBalls()
     {
