@@ -87,7 +87,6 @@ public class PlayerMove : Ball
         v_Player += a_friction * v_norm * Time.deltaTime;
     }
 
-
     void playermove_()
     {
         a_Player = GetComponent<Ball>().a;
@@ -108,7 +107,6 @@ public class PlayerMove : Ball
         ballFriction(ref v_Player, ref a_friction2);
 
         transform.position += v_Player * Time.deltaTime;
-
     }
-
+    
 }

@@ -9,11 +9,16 @@ public class GameManager : MonoBehaviour
     static public GameManager instance;
 
     public Level level1 = new Level();
+    private bool isgameOver = false;
+    private bool levelWin = false;
+    private int level = 1;
 
     [Header("UI Text")]
     public Text RemainOpponentCountText;
     public Text playerBallCountText;
     public Text ClickCountText;
+    public Text GameOverText;
+    public Text LevelText;
 
     [Header("Prefabs")]
     public GameObject Opponent;
@@ -35,7 +40,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         PM = GetComponent<PhysicsManager>();
-        LoadingNewLevel();
+        LoadingNewLevel(level);
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Opponent"))
         {
@@ -52,8 +57,59 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        UpdateText();
-        
+        if(PlayerBalls.Count == 0 && OpponentBalls.Count > 0)
+        {
+            isgameOver = true;
+        }
+        else if(PlayerBalls.Count > 0 && OpponentBalls.Count == 0)
+        {
+            levelWin = true;
+            level++;
+
+            GameObject [] leftBalls = GameObject.FindGameObjectsWithTag("Player");
+
+            for(int i = 0; i < leftBalls.Length; i++)
+            {
+                Destroy(leftBalls[i]);
+            }
+
+            StartCoroutine(newLevel(level));
+
+            /*
+            LoadingNewLevel(level);
+            findBalls();
+            PM.FindBalls();
+            */
+        }
+
+        if(isgameOver)
+        {
+            GameOverText.gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            UpdateText();
+        }
+
+
+        for (int i = 0; i < OpponentBalls.Count; i++) // null -> 제거
+        {
+            if (OpponentBalls[i] == null)
+            {
+                OpponentBalls.RemoveAt(i);
+            }
+        }
+
+        for (int i = 0; i < PlayerBalls.Count; i++) // null -> 제거
+        {
+            if (PlayerBalls[i] == null)
+            {
+                PlayerBalls.RemoveAt(i);
+            }
+        }
+
+        /*
         // if player ball fall down, respawn new player ball ============================================
         if(PlayerBalls.Count == 0)
         {
@@ -68,7 +124,7 @@ public class GameManager : MonoBehaviour
             PM.FindBalls();
         }
         // if player ball fall down, respawn new player ball ============================================
-
+        */
     }
 
 
@@ -77,14 +133,40 @@ public class GameManager : MonoBehaviour
         playerBallCountText.text = "Player Life : " + PlayerBalls.Count;
         ClickCountText.text = "ClickCount : " + PlayerMove.clickNum.ToString();
         RemainOpponentCountText.text = "Remain Opponent Count : " + OpponentBalls.Count;
+        LevelText.text = "Level : " + level.ToString();
+    }
+
+    void findBalls()
+    {
+        OpponentBalls.Clear();
+        PlayerBalls.Clear();
+
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Opponent"))
+        {
+            OpponentBalls.Add(go);
+        }
+
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PlayerBalls.Add(go);
+        }
     }
 
 
 
     // JSON DATA serialize ==============================================================================
-    private void LoadingNewLevel()
+    public IEnumerator newLevel(int level)
     {
-        level1 = loadData();
+        LoadingNewLevel(level);
+        yield return new WaitForEndOfFrame();
+        findBalls();
+        yield return new WaitForEndOfFrame();
+        PM.FindBalls();
+    }
+
+    private void LoadingNewLevel(int level)
+    {
+        level1 = loadData(level);
 
         for (int i = 0; i < level1.OpponentLocation.Count; i++)
         {
@@ -106,9 +188,10 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/JsonData/jsondata.txt", jsonData);
     }
 
-    public Level loadData()
+    public Level loadData(int index)
     {
-        string jsonData = File.ReadAllText(Application.dataPath + "/JsonData/jsondata.txt");
+        Debug.Log($"loadNew Data : level : {index}");
+        string jsonData = File.ReadAllText(Application.dataPath + "/JsonData/jsondata_" + index.ToString() + ".txt");
 
         Level data = JsonUtility.FromJson<Level>(jsonData);
 

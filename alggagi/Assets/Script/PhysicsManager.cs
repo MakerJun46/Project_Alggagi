@@ -46,10 +46,18 @@ public class PhysicsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     void Update()
     {
+        for (int i = 0; i < Balls.Count; i++) // null -> Á¦°Å
+        {
+            if (Balls[i] == null)
+            {
+                Balls.RemoveAt(i);
+            }
+        }
         moveBalls();
     }
 

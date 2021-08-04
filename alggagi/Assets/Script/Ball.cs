@@ -51,7 +51,7 @@ public class Ball : MonoBehaviour
         a_friction = -2.0f;
         Vector3 v_norm = v.normalized;
         v += a_friction * v_norm * Time.deltaTime;
-    }  
+    }
 
 
     /// <summary>
@@ -60,6 +60,6 @@ public class Ball : MonoBehaviour
     public void FallDown()
     {
         GM.GetComponent<PhysicsManager>().FindBalls();
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }
