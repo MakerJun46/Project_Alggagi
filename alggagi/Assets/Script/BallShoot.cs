@@ -13,7 +13,7 @@ public class BallShoot : Ball
     Vector3 a_ai;
     public Vector3 v_ai;
 
-    float a_friction2, a_friction;
+    float a_friction2;
 
     bool test = true;
     bool aaa = true;
