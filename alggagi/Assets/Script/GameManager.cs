@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     static public GameManager instance;
 
     public Level level1 = new Level();
+    public bool isPlayerTurn;
     private bool isgameOver = false;
     private bool levelWin = false;
     private int level = 1;
@@ -182,12 +183,12 @@ public class GameManager : MonoBehaviour
                             Quaternion.identity, PlayerParent.transform);
         }
     }
-    public void saveData(object obj)
+    public void saveData(object obj, int levCount)
     {
         string jsonData = JsonUtility.ToJson(obj, true);
 
         Debug.Log(jsonData);
-        File.WriteAllText(Application.dataPath + "/JsonData/jsondata.txt", jsonData);
+        File.WriteAllText(Application.dataPath + "/JsonData/jsondata_" + levCount.ToString() +  ".txt", jsonData);
     }
 
     public Level loadData(int index)

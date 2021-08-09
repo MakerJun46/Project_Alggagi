@@ -3,10 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public class Location
 {
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
-    public Location(int a, int b)
+    public Location(float a, float b)
     {
         this.x = a;
         this.y = b;
