@@ -36,20 +36,20 @@ public class AIPlayer : MonoBehaviour
 
     private void Attack()
     {
-        int index = random.Next(GM.OpponentBalls.Count);
-        int targetIndex = random.Next(GM.PlayerBalls.Count);
+        int index = random.Next(GM.PlayerBalls.Count);
+        int targetIndex = random.Next(GM.OpponentBalls.Count);
 
-        m_ai = GM.OpponentBalls[index].GetComponent<Ball>().m;
-        v_ai = GM.OpponentBalls[index].GetComponent<Ball>().v;
+        m_ai = GM.PlayerBalls[index].GetComponent<Ball>().m;
+        v_ai = GM.PlayerBalls[index].GetComponent<Ball>().v;
 
-        Transform target = GM.PlayerBalls[targetIndex].transform;
+        Transform target = GM.OpponentBalls[targetIndex].transform;
 
-        dir = (target.position - GM.OpponentBalls[index].transform.position).normalized;
+        dir = (target.position - GM.PlayerBalls[index].transform.position).normalized;
         power = dir * random.Next(20, 100);
 
         a_ai = power / m_ai;
         v_ai += a_ai;
 
-        GM.OpponentBalls[index].GetComponent<Ball>().v = v_ai;  // add velocity
+        GM.PlayerBalls[index].GetComponent<Ball>().v = v_ai;  // add velocity
     }
 }

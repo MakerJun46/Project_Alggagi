@@ -578,6 +578,7 @@ MonoBehaviour:
       y: -3
     - x: 2
       y: -3
+  isPlayerTurn: 0
   RemainOpponentCountText: {fileID: 413464639}
   playerBallCountText: {fileID: 1335073717}
   ClickCountText: {fileID: 1305874469}
