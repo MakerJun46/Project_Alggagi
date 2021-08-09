@@ -6,8 +6,7 @@ public class DrawLine : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     public bool isMouseUp = false;
-    //public GameObject gameobject;
-
+    
     // Start is called before the first frame update
     void Start()
     {

@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class Ball : MonoBehaviour
 {
     GameObject GM;
     public Vector3 a = new Vector3(0, 0, 0);
-    public float a_friction;
-    public Vector3 v_norm;
     public Vector3 v = new Vector3(0, 0, 0);
     public Vector3 f = new Vector3(0, 0, 0);
+
+    public float a_friction;
+    public Vector3 v_norm;
+    
     public float m = 5.0f;
     public float r;
-
-    public bool isCollision = false;
 
     RaycastHit hit;
     float MaxDistance = 10.0f;
@@ -33,6 +31,7 @@ public class Ball : MonoBehaviour
 
         if (Physics.Raycast(transform.position, -transform.forward, out hit, MaxDistance)) // 판 위에 있을때
         {
+            //v += g*Time.deltaTime;
             transform.position += v * Time.deltaTime;
         }
 
@@ -49,7 +48,7 @@ public class Ball : MonoBehaviour
     public void ballFriction(ref Vector3 v, ref float a_friction)
     {
         a_friction = -2.0f;
-        Vector3 v_norm = v.normalized;
+        v_norm = v.normalized;
         v += a_friction * v_norm * Time.deltaTime;
     }
 

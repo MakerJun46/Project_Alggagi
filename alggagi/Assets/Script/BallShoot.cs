@@ -7,18 +7,16 @@ public class BallShoot : Ball
     public List<GameObject> OpponentBalls = new List<GameObject>();
     public List<GameObject> PlayerBalls = new List<GameObject>();
 
-
     float m_ai;
     Vector3 f_ai;
     Vector3 a_ai;
     public Vector3 v_ai;
 
-    float a_friction2, a_friction;
+    float a_friction2;
 
-    bool test = true;
-    bool aaa = true;
-    public bool bbb = false;
-
+    bool AI_turn = true;
+    public bool addLists = true;
+    
     int i, j;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +28,22 @@ public class BallShoot : Ball
     // Update is called once per frame
     void Update()
     {
-        if (aaa)
+        for (int i = 0; i < OpponentBalls.Count; i++) // null -> 제거
+        {
+            if (OpponentBalls[i] == null)
+            {
+                OpponentBalls.RemoveAt(i);
+            }
+        }
+
+        for (int i = 0; i < PlayerBalls.Count; i++) // null -> 제거
+        {
+            if (PlayerBalls[i] == null)
+            {
+                PlayerBalls.RemoveAt(i);
+            }
+        }
+        if (addLists)
         {
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
             {
@@ -42,44 +55,31 @@ public class BallShoot : Ball
                 OpponentBalls.Add(go);
             }
 
-            aaa = false;
+            addLists = false;
         }
 
-
-        if (test)
+        if (AI_turn)
         {
-            i = Random.Range(0, 2);
-            j = Random.Range(0, 6);
-            Debug.Log("start test");
-            Vector3 moveDir = (PlayerBalls[0].transform.position - OpponentBalls[0].transform.position).normalized;
-            f_ai = moveDir * Random.Range(25, 30);
-            a_ai = f_ai / m_ai;
-
-            v_ai += a_ai;
-            OpponentBalls[0].GetComponent<Ball>().v = v_ai;
-            test = false;
-
+            AddForceAI();
+            AI_turn = false;
         }
 
         ballFriction(ref v_ai, ref a_friction2);
-        //Debug.Log("v_ai : " + v_ai.x + " , " + v_ai.y + " , " + v_ai.z);
-        //OpponentBalls[0].transform.position += v_ai * Time.deltaTime;
-        //OpponentBalls[0].GetComponent<Ball>().v = v_ai;
     }
 
-    //public void shoot(Vector3 power)
-    //{
+   void AddForceAI()
+   {
+        i = Random.Range(0, PlayerBalls.Count);
+        j = Random.Range(0, OpponentBalls.Count);
+  
+        Vector3 moveDir = (PlayerBalls[i].transform.position - OpponentBalls[j].transform.position).normalized;
 
-    //    Vector3 moveDir = (PlayerBalls[0].transform.position- OpponentBalls[0].transform.position).normalized;
-    //    power = moveDir * Random.Range(500, 2000);
-    //    a_ai = power / m_ai;
+        f_ai = moveDir* Random.Range(30, 35);
+        a_ai = f_ai / m_ai;
 
-    //    v_ai += a_ai * (1/10);
-
-    //    ballFriction(ref v_ai, ref a_friction2);
-
-    //    transform.position += v_ai * Time.deltaTime;
-    //}
+        v_ai += a_ai;
+        OpponentBalls[j].GetComponent<Ball>().v = v_ai;
+    }
 
 
 }

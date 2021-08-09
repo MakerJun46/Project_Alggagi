@@ -59,16 +59,16 @@ public class BallPhysics : MonoBehaviour
 
         if(this.gameObject.tag == "Player")
         {
-            gameObject.GetComponent<PlayerMove>().isCollision_Player = true;
+            //gameObject.GetComponent<PlayerMove>().isClick_Player = true;
             thisVelocity = gameObject.GetComponent<PlayerMove>().v_Player;
         }
         else
         {
-            gameObject.GetComponent<Ball>().isCollision = true;
+            //gameObject.GetComponent<Ball>().isCollision = true;
             thisVelocity = gameObject.GetComponent<Ball>().v;
         }
 
-        collision.gameObject.GetComponent<Ball>().isCollision = true;
+        //collision.gameObject.GetComponent<Ball>().isCollision = true;
         collisionVelocity = collision.gameObject.GetComponent<Ball>().v;
 
         n = (collisionCenter - thisCenter) / Vector3.Distance(collisionCenter, thisCenter);
@@ -137,7 +137,7 @@ public class BallPhysics : MonoBehaviour
 
                     if (Balls[i].gameObject.tag == "Player")
                     {
-                        Balls[i].GetComponent<PlayerMove>().isCollision_Player = true;
+                        Balls[i].GetComponent<PlayerMove>().isClick_Player = true;
                         v1 = Balls[i].GetComponent<PlayerMove>().v_Player;
                     }
 
@@ -152,35 +152,35 @@ public class BallPhysics : MonoBehaviour
 
                     n = (c2 - c1) / Vector3.Distance(c2, c1);
 
-                    v1pp = Vector3.Dot(v1, n);
-                    v1p = v1pp * n;
-                    a1 = v1 - v1p;
+                    v1x_scalar = Vector3.Dot(v1, n);
+                    v1x = v1x_scalar * n;
+                    v1y = v1 - v1x;
 
                     v2pp = Vector3.Dot(v2, n);
-                    v2p = v2pp * n;
-                    a2 = v2 - v2p;
+                    v2x = v2pp * n;
+                    v2y = v2 - v2x;
 
-                    float collisionTime = (r1 + r2 - Vector3.Distance(Balls[i].transform.position, Balls[j].transform.position)) / Mathf.Abs(v1pp - v2pp);
+                    float collisionTime = (r1 + r2 - Vector3.Distance(Balls[i].transform.position, Balls[j].transform.position)) / Mathf.Abs(v1x_scalar - v2pp);
 
                     Balls[i].transform.position -= collisionTime * v1;
                     Balls[j].transform.position -= collisionTime * v2;
 
-                    v1pprime = (((m1 - e * m2) * v1pp) + ((1 + e) * m2 * v2pp)) / (m1 + m2);
-                    v2pprime = (((m2 - e * m1) * v2pp) + ((1 + e) * m1 * v1pp)) / (m1 + m2);
+                    v1_collide_scalar = (((m1 - e * m2) * v1x_scalar) + ((1 + e) * m2 * v2pp)) / (m1 + m2);
+                    v2_collide_scalar = (((m2 - e * m1) * v2pp) + ((1 + e) * m1 * v1x_scalar)) / (m1 + m2);
 
-                    v11 = v1pprime * n + a1; // 충돌 후 원 c1의 속도
-                    v22 = v2pprime * n + a2; // 충돌 후 원 c2의 속도
+                    v1_collide = v1_collide_scalar * n + v1y; // 충돌 후 원 c1의 속도
+                    v2_collide = v2_collide_scalar * n + v2y; // 충돌 후 원 c2의 속도
 
                     if (Balls[i].gameObject.tag == "Player")
-                        Balls[i].GetComponent<PlayerMove>().v_Player = v11;
+                        Balls[i].GetComponent<PlayerMove>().v_Player = v1_collide;
 
                     else
-                        Balls[i].GetComponent<Ball>().v = v11;
+                        Balls[i].GetComponent<Ball>().v = v1_collide;
 
-                    Balls[j].GetComponent<Ball>().v = v22;
+                    Balls[j].GetComponent<Ball>().v = v2_collide;
 
-                    Balls[i].transform.position += (Time.deltaTime - collisionTime) * v11;
-                    Balls[j].transform.position += (Time.deltaTime - collisionTime) * v22;
+                    Balls[i].transform.position += (Time.deltaTime - collisionTime) * v1_collide;
+                    Balls[j].transform.position += (Time.deltaTime - collisionTime) * v2_collide;
                 }
             }
         }

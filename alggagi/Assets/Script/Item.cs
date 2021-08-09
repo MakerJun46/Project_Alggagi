@@ -23,15 +23,12 @@ public class Item : MonoBehaviour
 
     int GetItemPlayer_index;
 
-    bool addPlayersList = true;
+    public bool addPlayersList = true;
 
     // Start is called before the first frame update
     void Start()
     {
-
-
-        Instantiate(itemFactory, new Vector3(0.9f, -1.11f, 0.8f), Quaternion.identity);
-
+        Instantiate(itemFactory, new Vector3(0.0f, 0.0f, 0.8f), Quaternion.identity);
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Item"))
         {
@@ -48,7 +45,6 @@ public class Item : MonoBehaviour
             {
                 PlayerBalls.Add(go);
             }
-
             addPlayersList = false;
         }
 
@@ -59,6 +55,15 @@ public class Item : MonoBehaviour
                 PlayerBalls.RemoveAt(i);
             }
         }
+
+        for (int i = 0; i < Items.Count; i++) // null -> Á¦°Å
+        {
+            if (Items[i] == null)
+            {
+                Items.RemoveAt(i);
+            }
+        }
+
         getItem();
     }
 
@@ -83,8 +88,8 @@ public class Item : MonoBehaviour
                 getItems = true;
 
                 Items[0].transform.position = new Vector3(0, 0, -5);
-                Items[0].SetActive(false);
-                //Destroy(Items[0]);
+                //Items[0].SetActive(false);
+                Destroy(Items[0]);
             }
 
             if (startTime)

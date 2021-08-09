@@ -162,6 +162,8 @@ public class GameManager : MonoBehaviour
         findBalls();
         yield return new WaitForEndOfFrame();
         PM.FindBalls();
+        //GameObject.Find("ItemManager").GetComponent<Item>().addPlayersList = true;
+        //GameObject.Find("BallShootManager").GetComponent<BallShoot>().addLists = true;
     }
 
     private void LoadingNewLevel(int level)

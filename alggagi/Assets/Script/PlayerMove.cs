@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : Ball
+public class PlayerMove : MonoBehaviour
 {
     private Vector3 m_Offset;
     private float m_ZCoord;
     public bool isMouseUp = false;
     public bool MouseDragUp = false;
-    public float a_friction2 = -0.1f;
+    public float a_friction2 = -2.0f;
+
     public Vector3 originPos;
     public Vector3 mousePos;
-    public Vector3 v_Player, a_Player, f_Player;
+    public Vector3 v_Player = new Vector3(0, 0, 0);
+    public Vector3 a_Player, f_Player;
     public float m_player,d;
+
     public Vector3 prevPos;
     public Vector3 curPos;
-    public bool isCollision_Player=false;
     bool isMove;
     Vector3 mouseDragPos;
 
     public static int clickNum = 0;
+
+
 
     private void OnMouseDown()
     {
@@ -63,28 +67,7 @@ public class PlayerMove : Ball
     // Update is called once per frame
     void Update()
     {
-        //isCollision_Player = GameObject.Find("GameObject").GetComponent<PhysicsManager>().isCollision;
-
-        prevPos = this.transform.position;
-        playermove_();
-        curPos = this.transform.position;
-        if (isMove)
-        {
-            if (Mathf.Abs(curPos.x - prevPos.x) < 0.001f && Mathf.Abs(curPos.y - prevPos.y) < 0.001f)
-            {
-                originPos = this.transform.position;
-                v_Player = new Vector3(0, 0, 0);
-                isMove = false;
-            }
-        }
-    }
-
-
-    public void ballFriction()
-    {
-        a_friction = -0.1f;
-        Vector3 v_norm = v_Player.normalized;
-        v_Player += a_friction * v_norm * Time.deltaTime;
+        stopBallMove();
     }
 
     void playermove_()
@@ -100,13 +83,33 @@ public class PlayerMove : Ball
             f_Player = moveDir * 100;
             a_Player = f_Player / m_player;
                         
-            v_Player += a_Player  * (d / 1000);        
+            //v_Player += a_Player  * (d / 1000);
+            GetComponent<Ball>().v= a_Player * (d / 1000);
             MouseDragUp = false;
         }
 
-        ballFriction(ref v_Player, ref a_friction2);
+       // ballFriction(ref v_Player, ref a_friction2);
 
-        transform.position += v_Player * Time.deltaTime;
+        //transform.position += v_Player * Time.deltaTime;
+    }
+
+    /// <summary>
+    /// 이게 없으면 공들이 미세하게 계속 이동
+    /// </summary>
+    void stopBallMove()
+    {
+        prevPos = this.transform.position;
+        playermove_();
+        curPos = this.transform.position;
+        if (isMove)
+        {
+            if (Mathf.Abs(curPos.x - prevPos.x) < 0.001f && Mathf.Abs(curPos.y - prevPos.y) < 0.001f)
+            {
+                originPos = this.transform.position;
+                v_Player = new Vector3(0, 0, 0);
+                isMove = false;
+            }
+        }
     }
     
 }

@@ -73,17 +73,17 @@ public class PhysicsManager2 : MonoBehaviour
 
                     if (Balls[i].gameObject.tag == "Player")
                     {
-                        Balls[i].GetComponent<PlayerMove>().isCollision_Player = true;
+                        //Balls[i].GetComponent<PlayerMove>().isClick_Player = true;
                         v1 = Balls[i].GetComponent<PlayerMove>().v_Player;
                     }
 
                     else
                     {
-                        Balls[i].GetComponent<Ball>().isCollision = true;
+                        //Balls[i].GetComponent<Ball>().isCollision = true;
                         v1 = Balls[i].GetComponent<Ball>().v;
                     }
 
-                    Balls[j].GetComponent<Ball>().isCollision = true;
+                    //Balls[j].GetComponent<Ball>().isCollision = true;
                     v2 = Balls[j].GetComponent<Ball>().v;
 
                     n = (c2 - c1) / Vector3.Distance(c2, c1);
