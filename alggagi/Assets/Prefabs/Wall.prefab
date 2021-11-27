@@ -113,5 +113,6 @@ MonoBehaviour:
   f: {x: 0, y: 0, z: 0}
   a_friction: 0
   v_norm: {x: 0, y: 0, z: 0}
-  m: 5
+  isBallStop: 0
+  m: 1000
   r: 0

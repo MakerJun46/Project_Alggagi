@@ -64,6 +64,10 @@ public class PhysicsManager : MonoBehaviour
     {
         
     }
+    void FixedUpdate()
+    {
+        FindBalls();
+    }
 
     void Update()
     {
@@ -74,6 +78,7 @@ public class PhysicsManager : MonoBehaviour
                 Balls.RemoveAt(i);
             }
         }
+
         moveBalls();
     }
 

@@ -112,13 +112,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   a: {x: 0, y: 0, z: 0}
-  a_friction: -0.1
-  v_norm: {x: 0, y: 0, z: 0}
   v: {x: 0, y: 0, z: 0}
   f: {x: 0, y: 0, z: 0}
+  stopCmp: {x: 0, y: 0, z: 0}
+  a_friction: -0.1
+  v_norm: {x: 0, y: 0, z: 0}
+  isBallStop: 0
   m: 5
   r: 0.15
-  isCollision: 0
 --- !u!114 &8022573373482223743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,14 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45008cf1aa3a86e4992b5a9191ad8cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: {x: 0, y: 0, z: 0}
-  a_friction: -0.1
-  v_norm: {x: 0, y: 0, z: 0}
-  v: {x: 0, y: 0, z: 0}
-  f: {x: 0, y: 0, z: 0}
-  m: 5
-  r: 0
-  isCollision: 0
   isMouseUp: 0
   MouseDragUp: 0
   a_friction2: -0.1
@@ -151,7 +144,6 @@ MonoBehaviour:
   d: 0
   prevPos: {x: 0, y: 0, z: 0}
   curPos: {x: 0, y: 0, z: 0}
-  isCollision_Player: 0
 --- !u!120 &1488556842460827718
 LineRenderer:
   m_ObjectHideFlags: 0

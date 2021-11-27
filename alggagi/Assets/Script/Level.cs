@@ -9,6 +9,7 @@ public class Level
 {
     public List<Location> OpponentLocation = new List<Location>();
     public List<Location> PlayerLocation = new List<Location>();
+    public List<Location> WallLocation = new List<Location>();
 
     System.Random random = new System.Random();
 
@@ -24,24 +25,16 @@ public class Level
         }
     }
 
-    public Level(List<Location> loc)
+    public Level(List<Location> loc, int WallCount)
     {
         PlayerLocation.Add(loc[0]);
-        for(int i = 1; i < loc.Count; i++)
+        for(int i = 1; i < loc.Count - WallCount; i++)
         {
             OpponentLocation.Add(loc[i]);
         }
-    }
-
-    public void print()
-    {
-        foreach (Location l in OpponentLocation)
+        for(int i = loc.Count - WallCount; i < loc.Count; i++)
         {
-            Debug.Log($"Opponent x : {l.x}, y : {l.y}");
-        }
-        foreach (Location l in PlayerLocation)
-        {
-            Debug.Log($"Player x : {l.x}, y : {l.y}");
+            WallLocation.Add(loc[i]);
         }
     }
 }

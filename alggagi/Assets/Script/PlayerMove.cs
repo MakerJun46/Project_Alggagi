@@ -86,6 +86,8 @@ public class PlayerMove : MonoBehaviour
             //v_Player += a_Player  * (d / 1000);
             GetComponent<Ball>().v= a_Player * (d / 1000);
             MouseDragUp = false;
+
+            GameManager.instance.MovableCount--;
         }
 
        // ballFriction(ref v_Player, ref a_friction2);
